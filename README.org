@@ -1,11 +1,20 @@
 #+TITLE: Python Version Sorting
 #+STYLE: <link rel="stylesheet" type="text/css" href="org.css" />
 
-* PyVersioning
+* Overview
 
-** Overview
+  PyVersioning is a simple way to sort version numbers using the Python built-in OrderedDict class.
 
-   #+BEGIN_SRC javascript
+  MySQL_database uses the versioning module for running upgrade and downgrade scripts.  It requires
+  the database connection information and the list of python files that contain all the check,
+  upgrade and downgrade functions.  Each file must be named starting with the version number,
+  followed by an underscore and then the upgrade package name ~<version>_<package name>.pack~.  By
+  convention the extension should be ~.pack~ instead of ~.py~ because package files have
+  requirements.
+
+** PyVersioning
+
+   #+BEGIN_SRC python
 from versioning import Version_dict
 
 packages		= Version_dict()
@@ -17,27 +26,25 @@ upgrades		= packages.slice( '1.1', '2.0' )
 downgrades		= packages.slice( stop='1.1' )	# packages.slice( None, '1.1' )
    #+END_SRC
 
-* MySQL_database
+** MySQL_database
 
-** Overview
-
-  #+BEGIN_SRC javascript
+   #+BEGIN_SRC python
 from versioning import MySQL_database
+manager		= MySQL_database( user		= "<db_user>",
+                                  password	= "<user_password>",
+                                  packages	= [ os.path.abspath('./tests/packages/'+pack) for pack in os.listdir('./tests/packages') ] )
 
-manager			= MySQL_database( user		= "<db_user>",
-                                          password	= "<user_password>",
-                                          packages	= [<paths to .pack files>] )
 
 manager.packages()
 manager.upgrade( '2.0' )
 manager.downgrade( '2.0' )
   #+END_SRC
 
-** Install MySQLdb on mac
+*** Install MySQLdb on mac
 
-   #+BEGIN_SRC bash
+    #+BEGIN_SRC bash
 brew install mysql
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 pip install mysql-python   
-   #+END_SRC
+    #+END_SRC
