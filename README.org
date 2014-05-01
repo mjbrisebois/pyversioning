@@ -1,0 +1,16 @@
+#+TITLE: Python Version Sorting
+#+STYLE: <link rel="stylesheet" type="text/css" href="org.css" />
+
+* Overview
+
+  #+BEGIN_SRC javascript
+from pyversioning import Version_dict
+
+packages		= Version_dict()
+packages['1.0']		= "..."
+packages['1.1']		= "..."
+packages['2.0']		= "..."
+
+upgrades		= packages.slice( '1.1', '2.0' )
+downgrades		= packages.slice( stop='1.1' )	# packages.slice( None, '1.1' )
+  #+END_SRC
