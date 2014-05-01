@@ -4,11 +4,9 @@ setup(
     name			= "versioning",
     packages			= [
         "versioning",
-        "versioning/utils",
     ],
     package_dir			= {
         "versioning":		".", 
-        "versioning/utils":	"./utils", 
     },
     version			= "0.1.0",
     description			= "Python version sorting tool",

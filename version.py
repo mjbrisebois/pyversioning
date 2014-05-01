@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
-# pyversions -- Library that implements Python like methods in JavaScript.
+# pyversioning -- Library that implements Python like methods in JavaScript.
 #
 # Copyright (c) 2014, Web Heroes Inc.
 #
-# This file is part of pyversions
+# This file is part of pyversioning
 #
-# pyversions is free software: you can redistribute it and/or modify
+# pyversioning is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
