@@ -23,41 +23,18 @@ def test_version_sort():
     versions['3.0']	= 'upgraded-armory'
     versions['10.0.2']	= 'coolio-bigalo'
     
-    start		= list(versions.slice( start='2.0' ))
-    
-    # ('2.0', 'release-beta')
-    # ('2.5', 'halfway-super-pack')
-    # ('3.0', 'upgraded-armory')
-    # ('10.0.2', 'coolio-bigalo')
+    start		= versions.slice( start='2.0' )
 
     assert len(start) == 4
-    assert start[0][0] == '2.0'
-    assert start[0][1] == 'release-beta'
-    assert start[3][0] == '10.0.2'
-    assert start[3][1] == 'coolio-bigalo'
+    assert start.keys() == ['2.0', '2.5', '3.0', '10.0.2']
 
-    stop		= list(versions.slice( stop='2.0' ))
-    
-    # ('0.1', 'create-databases')
-    # ('0.2', 'create-tables')
-    # ('1.0', 'feature-cool')
-    # ('1.0.1', 'hotfix-your-mom')
-    # ('2.0', 'release-beta')
+    stop		= versions.slice( stop='2.0' )
 
     assert len(stop) == 5
-    assert stop[0][0] == '0.1'
-    assert stop[0][1] == 'create-databases'
-    assert stop[4][0] == '2.0'
-    assert stop[4][1] == 'release-beta'
+    assert stop.keys() == ['0.1', '0.2', '1.0', '1.0.1', '2.0']
+    
 
-    startstop		= list(versions.slice( '1.0', '2.0' ))
-
-    # ('1.0', 'feature-cool')
-    # ('1.0.1', 'hotfix-your-mom')
-    # ('2.0', 'release-beta')
+    startstop		= versions.slice( '1.0', '2.0' )
 
     assert len(startstop) == 3
-    assert startstop[0][0] == '1.0'
-    assert startstop[0][1] == 'feature-cool'
-    assert startstop[2][0] == '2.0'
-    assert startstop[2][1] == 'release-beta'
+    assert startstop.keys() == ['1.0', '1.0.1', '2.0']

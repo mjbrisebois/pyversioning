@@ -1,10 +1,12 @@
 #+TITLE: Python Version Sorting
 #+STYLE: <link rel="stylesheet" type="text/css" href="org.css" />
 
-* Overview
+* PyVersioning
 
-  #+BEGIN_SRC javascript
-from pyversioning import Version_dict
+** Overview
+
+   #+BEGIN_SRC javascript
+from versioning import Version_dict
 
 packages		= Version_dict()
 packages['1.0']		= "..."
@@ -13,4 +15,29 @@ packages['2.0']		= "..."
 
 upgrades		= packages.slice( '1.1', '2.0' )
 downgrades		= packages.slice( stop='1.1' )	# packages.slice( None, '1.1' )
+   #+END_SRC
+
+* MySQL_database
+
+** Overview
+
+  #+BEGIN_SRC javascript
+from versioning import MySQL_database
+
+manager			= MySQL_database( user		= "<db_user>",
+                                          password	= "<user_password>",
+                                          packages	= [<paths to .pack files>] )
+
+manager.packages()
+manager.upgrade( '2.0' )
+manager.downgrade( '2.0' )
   #+END_SRC
+
+** Install MySQLdb on mac
+
+   #+BEGIN_SRC bash
+brew install mysql
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
+pip install mysql-python   
+   #+END_SRC

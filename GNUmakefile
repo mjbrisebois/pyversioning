@@ -8,6 +8,7 @@ PYTEST		= $(PY2) -m pytest $(PYTESTOPTS)
 
 clean:
 	find . -name '*.pyc' -exec rm {} \;
+	find . -name '*.packc' -exec rm {} \;
 
 test:		clean
 	$(PYTEST)

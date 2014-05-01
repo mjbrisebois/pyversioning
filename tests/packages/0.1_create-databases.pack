@@ -1,0 +1,11 @@
+# -*- mode: python -*-
+
+def check( conn, cursor ):
+    print "Checking out your mom"
+    return True
+
+def upgrade( conn, cursor ):
+    print "Upgrade your mom"
+
+def downgrade( conn, cursor ):
+    print "Downgrade your mom"

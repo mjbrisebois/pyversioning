@@ -20,11 +20,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import OrderedDict
+import json
 
 class Version_dict(OrderedDict):
     
-    def __init__( self ):
-        super(Version_dict, self).__init__()
+    def __init__( self, *args, **kwargs ):
+        self._reversed	= False
+        super(Version_dict, self).__init__(*args, **kwargs)
 
     def __setitem__( self, name, value ):
         super(Version_dict, self).__setitem__( name, value )
@@ -33,7 +35,16 @@ class Version_dict(OrderedDict):
     def __call__( self, start=None, stop=None ):
         return self.slice( start, stop )
 
+    def __str__( self ):
+        return json.dumps( self )
+
+    def reverse( self ):
+        self._reversed	= True
+        self.sort()
+
     def slice( self, start=None, stop=None ):
+        sliced_dict	= OrderedDict()
+
         remove_start	= False
         remove_stop	= False
 
@@ -51,7 +62,7 @@ class Version_dict(OrderedDict):
                     if remove_start:
                         del self[start]
                     else:
-                        yield (v, name)
+                        sliced_dict[v]	= name
                     found	= True
                 continue
 
@@ -59,9 +70,10 @@ class Version_dict(OrderedDict):
                 if remove_stop:
                     del self[stop]
                 else:
-                    yield (v, name)
+                    sliced_dict[v]	= name
                 break
-            yield (v, name)
+            sliced_dict[v]		= name
+        return Version_dict( sliced_dict )
 
     def sort( self ):
         keys		= self.keys()
@@ -89,6 +101,8 @@ class Version_dict(OrderedDict):
                     pass
                 return v
         keys.sort( key=lambda s: map(k, s.split('.')) )
+        if self._reversed:
+            keys.reverse()
         for k in keys:
             v		= self[k]
             del self[k]
