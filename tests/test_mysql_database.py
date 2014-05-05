@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, json
+import os, sys
 
 scriptdir	= os.path.dirname(os.path.abspath(__file__)) # clip file name from path
 basedir		= os.path.dirname(scriptdir) # tests/..

@@ -19,12 +19,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from version import Version_dict
+from __future__	import print_function
+from version	import Version_dict
+from bashutils.colors	import color_text as ctext
 
 import MySQLdb
 import MySQLdb.cursors
 
 import os, imp
+
+def white(text):
+    return ctext(text, color="white")
 
 class MySQL_database(object):
     
@@ -43,6 +48,7 @@ class MySQL_database(object):
                                            passwd	= password,
                                            cursorclass	= MySQLdb.cursors.DictCursor, )
         self._cursor	= self._conn.cursor()
+        self.quiet	= False
 
         # From:	<path>/<version>_<name>.<ext>
         # To:	self[<version>]	= ( <name>, <path> )
@@ -74,15 +80,19 @@ class MySQL_database(object):
         path, name		= self._packs[version]
         pack			= imp.load_source(name, path)
         os.remove( path+'c' ) # remove compiled file
-        return pack
+        return pack, name
 
     def install( self, version ):
-        pack			= self.load( version )
+        pack, name		= self.load( version )
         if not pack.check( self._conn, self._cursor ):
+            self.quiet or print( white("""Installing: v{: <8}   -- {:<40}""".format( version,
+                                                                                   name.replace('-', ' ').title() )))
             pack.upgrade( self._conn, self._cursor )
 
     def uninstall( self, version ):
-        pack			= self.load( version )
+        pack, name		= self.load( version )
         if pack.check( self._conn, self._cursor ):
+            self.quiet or print( white("""Uninstalling: v{: <8} -- {:<40}""".format( version,
+                                                                                   name.replace('-', ' ').title() )))
             pack.downgrade( self._conn, self._cursor )
 

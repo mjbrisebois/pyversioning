@@ -8,7 +8,7 @@ setup(
     package_dir			= {
         "versioning":		".", 
     },
-    version			= "0.2.0",
+    version			= "0.2.1",
     description			= "Python version sorting tool and MySQL version manager",
     author			= "Matthew Brisebois",
     author_email		= "matthew@webheroes.ca",
